@@ -1,1 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Snippet | CodeVaultPro</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <h1>＋ Add Snippet</h1>
+  </header>
 
+  <main>
+    <div class="modal-content">
+      <input type="text" id="title" placeholder="Snippet Title" />
+      <input type="text" id="language" placeholder="Language" />
+      <input type="text" id="tags" placeholder="Tags (comma separated)" />
+      <textarea id="content" placeholder="Code content..."></textarea>
+      <div style="display:flex;justify-content:flex-end;gap:10px;">
+        <button id="save-btn">Save</button>
+        <button onclick="window.location.href='/index.html'">Cancel</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

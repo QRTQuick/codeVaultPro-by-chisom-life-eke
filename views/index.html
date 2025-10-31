@@ -1,32 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CodeVault Pro</title>
-  <link rel="stylesheet" href="/css/style.css" />
-  <script src="/prism.js"></script>
+  <meta charset="UTF-8">
+  <title>CodeVaultPro | Snippet Library</title>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <!-- Prism CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+
+  <!-- Prism JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"></script>
+  <!-- Include languages you need -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-python.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-java.min.js"></script>
 </head>
+
 <body>
   <header>
-    <h1>💾 CodeVault Pro</h1>
-    <button id="add-btn">➕ Add Snippet</button>
+    <h1>⚡ CodeVaultPro</h1>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search snippets... (AI powered)">
+    </div>
+    <!--<button id="add-btn">＋ Add Snippet</button>-->
+    <button id="add-btn" onclick="window.location.href='/add.html'">＋ Add Snippet</button>
   </header>
 
-  <section id="snippet-list"></section>
+  <main>
+    <section id="snippet-list"></section>
+  </main>
 
+  <footer>
+    © 2025 CodeVaultPro by Chisom Life Eke
+  </footer>
+
+  <!-- Add Snippet Modal -->
   <div id="add-modal" class="modal">
     <div class="modal-content">
-      <h2>Add Snippet</h2>
-      <input id="title" placeholder="Title" />
-      <input id="language" placeholder="Language" />
-      <input id="tags" placeholder="Tags (comma separated)" />
-      <textarea id="content" placeholder="Your code here..."></textarea>
-      <button id="save-btn">Save</button>
-      <button id="close-btn">Close</button>
+      <h2>Add New Snippet</h2>
+      <input type="text" id="title" placeholder="Snippet Title" />
+      <input type="text" id="language" placeholder="Language (e.g., JavaScript)" />
+      <input type="text" id="tags" placeholder="Tags (comma separated)" />
+      <textarea id="content" placeholder="Code content..."></textarea>
+      <div style="display:flex;justify-content:flex-end;gap:10px;">
+        <button id="save-btn">Save</button>
+        <button id="close-btn">Close</button>
+      </div>
     </div>
   </div>
 
+  <!-- External JS -->
   <script src="/js/main.js"></script>
 </body>
+
 </html>

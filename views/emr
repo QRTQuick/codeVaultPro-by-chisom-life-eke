@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CodeVaultPro | Snippet Library</title>
+  <link rel="stylesheet" href="/codeVaultPro-by-chisom-life-eke/public/css/style.css">
+</head>
+<body>
+  <header>
+    <h1>⚡ CodeVaultPro</h1>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search snippets... (AI powered)">
+    </div>
+    <button onclick="window.location.href='/add.html'">＋ Add Snippet</button>
+  </header>
+
+  <main>
+    <section id="snippet-list"></section>
+  </main>
+
+  <footer>
+    © 2025 CodeVaultPro by Chisom Life Eke
+  </footer>
+
+  <script>
+    async function loadSnippets() {
+      const res = await fetch('/api/snippets');
+      const snippets = await res.json();
+      displaySnippets(snippets);
+    }
+
+    function displaySnippets(snippets) {
+      const list = document.getElementById('snippet-list');
+      list.innerHTML = '';
+
+      if (snippets.length === 0) {
+        list.innerHTML = `<p style="text-align:center;color:#999;">No snippets found. Add one!</p>`;
+        return;
+      }
+
+      snippets.forEach(s => {
+        const div = document.createElement('div');
+        div.className = 'snippet';
+        div.innerHTML = `
+          <h3>${s.title}</h3>
+          <p><b>Language:</b> ${s.language || 'Unknown'}</p>
+          <p><b>Tags:</b> ${s.tags || 'None'}</p>
+          <pre>${s.content}</pre>
+          <button onclick="viewSnippet(${s.id})">View</button>
+          <button onclick="editSnippet(${s.id})">Edit</button>
+          <button onclick="deleteSnippet(${s.id})" style="background:#a33;">Delete</button>
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    function viewSnippet(id) {
+      window.location.href = `/view.html?id=${id}`;
+    }
+
+    function editSnippet(id) {
+      window.location.href = `/edit.html?id=${id}`;
+    }
+
+    async function deleteSnippet(id) {
+      if (!confirm('Delete this snippet?')) return;
+      await fetch(`/api/snippets/${id}`, { method: 'DELETE' });
+      loadSnippets();
+    }
+
+    document.getElementById('searchInput').addEventListener('input', async (e) => {
+      const query = e.target.value.toLowerCase();
+      const res = await fetch('/api/snippets');
+      const snippets = await res.json();
+      const filtered = snippets.filter(s =>
+        s.title.toLowerCase().includes(query) ||
+        s.language.toLowerCase().includes(query) ||
+        s.tags.toLowerCase().includes(query) ||
+        s.content.toLowerCase().includes(query)
+      );
+      displaySnippets(filtered);
+    });
+
+    loadSnippets();
+  </script>
+</body>
+</html>

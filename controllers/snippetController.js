@@ -1,29 +1,65 @@
-const Database = require("better-sqlite3");
-const db = new Database("./database/snippets.db");
+//snippetController.js
+const Snippet = require("../models/snippetModel");
 
-db.prepare(`CREATE TABLE IF NOT EXISTS snippets (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    title TEXT,
-    language TEXT,
-    tags TEXT,
-    content TEXT,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-)`).run();
-
-exports.getAll = (req, res) => {
-  const rows = db.prepare("SELECT * FROM snippets ORDER BY created_at DESC").all();
-  res.json(rows);
+// Get all snippets
+exports.getAll = async (req, res) => {
+  try {
+    const rows = await Snippet.getAllSnippets();
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch snippets" });
+  }
 };
 
-exports.addSnippet = (req, res) => {
+// Get snippet by ID
+exports.getById = async (req, res) => {
+  try {
+    const snippet = await Snippet.getSnippetById(parseInt(req.params.id));
+    if (!snippet) return res.status(404).json({ error: "Snippet not found" });
+    res.json(snippet);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch snippet" });
+  }
+};
+
+// Add snippet
+exports.addSnippet = async (req, res) => {
   const { title, language, tags, content } = req.body;
-  const stmt = db.prepare("INSERT INTO snippets (title, language, tags, content) VALUES (?, ?, ?, ?)");
-  stmt.run(title, language, tags, content);
-  res.json({ message: "Snippet added successfully" });
+  if (!title || !language || !content)
+    return res.status(400).json({ error: "Missing required fields" });
+
+  try {
+    const id = await Snippet.addSnippet({ title, language, tags, content });
+    res.status(201).json({ id, message: "Snippet added successfully" });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to add snippet" });
+  }
 };
 
-exports.deleteSnippet = (req, res) => {
-  const { id } = req.params;
-  db.prepare("DELETE FROM snippets WHERE id = ?").run(id);
-  res.json({ message: "Snippet deleted" });
+// Update snippet
+exports.updateSnippet = async (req, res) => {
+  const id = parseInt(req.params.id);
+  const { title, language, tags, content } = req.body;
+
+  if (!title || !language || !content)
+    return res.status(400).json({ error: "Missing required fields" });
+
+  try {
+    const changes = await Snippet.updateSnippet(id, { title, language, tags, content });
+    if (changes === 0) return res.status(404).json({ error: "Snippet not found" });
+    res.json({ message: "Snippet updated successfully" });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to update snippet" });
+  }
+};
+
+// Delete snippet
+exports.deleteSnippet = async (req, res) => {
+  try {
+    const changes = await Snippet.deleteSnippet(parseInt(req.params.id));
+    if (changes === 0) return res.status(404).json({ error: "Snippet not found" });
+    res.json({ message: "Snippet deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to delete snippet" });
+  }
 };

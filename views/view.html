@@ -1,1 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>View Snippet | CodeVaultPro</title>
+  <link rel="stylesheet" href="/css/style.css">
 
+  <!-- Prism -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Snippet Details</h1>
+  </header>
+
+  <main>
+    <section id="snippet-view">
+      <h2 id="view-title"></h2>
+      <p><b>Language:</b> <span id="view-language"></span></p>
+      <p><b>Tags:</b> <span id="view-tags"></span></p>
+      <pre><code id="view-content" class="language-text"></code></pre>
+      <button onclick="window.location.href='/index.html'">Back</button>
+    </section>
+  </main>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>
