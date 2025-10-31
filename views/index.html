@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CodeVault Pro</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <script src="/prism.js"></script>
+</head>
+<body>
+  <header>
+    <h1>💾 CodeVault Pro</h1>
+    <button id="add-btn">➕ Add Snippet</button>
+  </header>
+
+  <section id="snippet-list"></section>
+
+  <div id="add-modal" class="modal">
+    <div class="modal-content">
+      <h2>Add Snippet</h2>
+      <input id="title" placeholder="Title" />
+      <input id="language" placeholder="Language" />
+      <input id="tags" placeholder="Tags (comma separated)" />
+      <textarea id="content" placeholder="Your code here..."></textarea>
+      <button id="save-btn">Save</button>
+      <button id="close-btn">Close</button>
+    </div>
+  </div>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>
