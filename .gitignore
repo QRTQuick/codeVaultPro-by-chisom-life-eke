@@ -46,7 +46,7 @@ tmp/
 # =========================
 # Database (SQLite)
 # =========================
-database/*.db
+
 database/*.sqlite
 database/*.sqlite3
 
